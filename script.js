@@ -22,7 +22,22 @@ spawnCards()
 players.forEach(player => dealCards(player))
 placeFirstPileCard()
 
-function takeTurn() {
+function takeTurn(event) {    
+    if (turn == 0) {
+        const turnColor = event.target.style.backgroundColor
+        const turnValue = event.target.innerHTML
+        const turnID = players[0].hand.findIndex(card => card.value == turnValue && card.color == turnColor)
+        const turnCard = players[0].hand.splice(turnID,1)[0]
+        console.log(turnCard)
+        pile.push(turnCard)
+    }
+    else {
+        const thisHand = players[turn].hand
+        const turnCard = thisHand.splice(Math.floor(Math.random()*thisHand.length),1)[0]
+        pile.push(turnCard)
+    }
+    turn++
+    if (turn == 4) turn = 0
     showPileTop()
 }
 
